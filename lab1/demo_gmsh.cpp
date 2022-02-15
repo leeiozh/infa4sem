@@ -15,14 +15,14 @@ int main(int argc, char **argv)
     // Let's merge an STL mesh that we would like to remesh (from the parent
     // directory):
     try {
-        gmsh::merge("/home/leeiozh/miptbot/proga/infa4sem/lab1/inp/tor.stl");
+        gmsh::merge("/home/leeiozh/miptbot/proga/infa4sem/lab1/inp/LowPoly_Toothless_Ntermation.stl");
     } catch(...) {
         gmsh::logger::write("Could not load STL mesh: bye!");
         gmsh::finalize();
         return 0;
     }
 
-    double angle = 40;
+    double angle = 20;
 
     bool forceParametrizablePatches = true;
 
@@ -54,7 +54,7 @@ int main(int argc, char **argv)
 
     gmsh::model::mesh::generate(3);
 
-    gmsh::write("/home/leeiozh/miptbot/proga/infa4sem/lab1/out/tor.msh");
+    gmsh::write("/home/leeiozh/miptbot/proga/infa4sem/lab1/out/dragon_light_3d.msh");
 
     // Launch the GUI to see the results:
     std::set<std::string> args(argv, argv + argc);
