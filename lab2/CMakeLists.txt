@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.11)
 
 set(CMAKE_CXX_FLAGS "-std=c++11 -g")
 
-project(vtkdemo)
-add_executable(tor tor.cpp)
+project(lab2)
+add_executable(drag_fire drag_fire.cpp)
 
 # Найдём VTK
 find_package(VTK REQUIRED)
@@ -18,14 +18,5 @@ set_target_properties(gmsh PROPERTIES
         )
 set(GMSH_LIBRARY gmsh)
 
-# если бы gmsh был поставлен прилично, то можно было бы примерно вот так
-#find_package(gmsh REQUIRED)
-#include_directories(${GMSH_INCLUDE_DIR})
-#target_link_libraries(tor ${GMSH_LIBRARY})
-
-# Укажем библиотеки для линковки
-# ... тут только VTK
-
-# ... а тут ещё и gmsh
-target_link_libraries(tor ${VTK_LIBRARIES})
-target_link_libraries(tor ${GMSH_LIBRARY})
+target_link_libraries(drag_fire ${VTK_LIBRARIES})
+target_link_libraries(drag_fire ${GMSH_LIBRARY})
