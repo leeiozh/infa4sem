@@ -33,19 +33,16 @@ TEST(SIMPLE_2D, INIT) {
     // Создаём сетку заданного размера
     Mesh<DIM> mesh(size, h, n_coeff);
 
-    Writer<DIM> writer(std::string("/home/leeiozh/miptbot/proga/infa4sem/mini_project/out/2203"));
+    Writer<DIM> writer(std::string("/home/leeiozh/miptbot/proga/infa4sem/mini_project/out/2803_"));
 
     double angle = 45. / 180. * M_PI;
 
     Ray<DIM> ray(angle, 0, 0, h);
-
-    // Пишем её начальное состояние в VTK
 
     while (ray.get_x() < size * h) {
         ray.step(h, n_min + ray.get_x() / size / h * (n_max - n_min), n_min + (ray.get_x() + h) / size / h * (n_max - n_min));
         std::cout << ray.get_x() << " " << ray.get_y() << std::endl;
     }
 
-    writer.snapshot(1, mesh, ray);
-
+    writer.snapshot(55, mesh, ray);
 }

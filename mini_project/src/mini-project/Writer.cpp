@@ -120,52 +120,42 @@ void Writer<DIM>::snapshot(int counter, const Mesh<DIM> &mesh, const Ray<DIM> &r
     // Присоединяем векторное и скалярное поля к точкам
     structuredGrid->GetPointData()->AddArray(refrInd);
 
-    std::vector<std::array<double, DIM>> trajectory = ray.get_tract();
-
-    vtkNew<vtkPoints> tract_points;
-
-    for (auto &point: trajectory) {
-        if (DIM == 3) {
-            tract_points->InsertNextPoint(point[0], point[1], point[2]);
-        } else {
-            tract_points->InsertNextPoint(point[0], point[1], 0.);
-        }
-    }
-
-    vtkNew<vtkPolyLine> polyLine;
-    polyLine->GetPointIds()->SetNumberOfIds(trajectory.size());
-    vtkNew<vtkCellArray> cells;
-    for (int i = 0; i < trajectory.size(); i++) {
-
-        polyLine->GetPointIds()->SetId(i, i);
-
-    }
-
-
-    vtkNew<vtkPolyData> polyData;
-    polyData->SetPoints(tract_points.Get());
-//    polyData->SetLines(cells.Get());
-
-//    vtkSmartPointer<vtkPolyDataMapper> mapper;
-//    mapper->SetInputData(polyData);
-//
-//    vtkSmartPointer<vtkNamedColors> colors;
-//
-//    vtkSmartPointer<vtkActor> actor;
-//    actor->SetMapper(mapper);
-//    actor->GetProperty()->SetColor(colors->GetColor3d("Tomato").GetData());
-
-    // Создаём снапшот в файле с заданным именем
-    std::string fileName = path_ + std::to_string(counter) + "back.vts";
-    std::string fileName2 = path_ + std::to_string(counter) + "trace.vts";
+    std::string fileName = path_ + std::to_string(counter) + "_back.vts";
     vtkSmartPointer<vtkXMLStructuredGridWriter> writer = vtkSmartPointer<vtkXMLStructuredGridWriter>::New();
     writer->SetFileName(fileName.c_str());
     writer->SetInputData(structuredGrid);
     writer->Write();
 
+    std::vector<std::array<double, DIM>> trajectory = ray.get_tract();
+
+    vtkNew<vtkPoints> tract_points;
+
+    for (auto &point_: trajectory) {
+        if (DIM == 3) {
+            tract_points->InsertNextPoint(point_[0], point_[1], point_[2]);
+        } else {
+            tract_points->InsertNextPoint(point_[0], point_[1], 0.);
+        }
+    }
+
+    vtkNew<vtkPolyData> polyData;
+    polyData->SetPoints(tract_points.Get());
+
+    vtkNew<vtkPolyLine> polyLine;
+
+    polyLine->GetPointIds()->SetNumberOfIds(trajectory.size());
+    for (unsigned int i = 0; i < trajectory.size(); i++)
+    {
+        polyLine->GetPointIds()->SetId(i, i);
+    }
+
+//    vtkNew<vtkCellArray> cells;
+//    cells->InsertNextCell(polyLine->GetEdge(0));
+//    polyData->SetLines(cells.Get());
+
+    std::string fileName2 = path_ + std::to_string(counter) + "_trace.vts";
     vtkSmartPointer<vtkXMLPPolyDataWriter> writer2 = vtkSmartPointer<vtkXMLPPolyDataWriter>::New();
     writer2->SetFileName(fileName2.c_str());
-
     writer2->SetInputData(polyData.Get());
     writer2->Write();
 }

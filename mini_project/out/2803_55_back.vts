@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<VTKFile type="StructuredGrid" version="0.1" byte_order="LittleEndian" header_type="UInt32" compressor="vtkZLibDataCompressor">
+  <StructuredGrid WholeExtent="0 19 0 19 0 0">
+    <Piece Extent="0 19 0 19 0 0"                                                     >
+      <PointData>
+        <DataArray type="Float64" Name="refrInd" format="appended" RangeMin="1"                    RangeMax="1.475"                offset="0"                   />
+      </PointData>
+      <CellData>
+      </CellData>
+      <Points>
+        <DataArray type="Float32" Name="Points" NumberOfComponents="3" format="appended" RangeMin="0"                    RangeMax="26.870057685"         offset="152"                 />
+      </Points>
+    </Piece>
+  </StructuredGrid>
+  <AppendedData encoding="base64">
+   _AQAAAACAAACADAAAYAAAAA==eJzN0kEVgCAQANHtZADb2AkzaRdFgStvmRIzl19gIrJnD6nHyut9ZV631av1LJlXPqxa+dArH3rlw08rH3rlw18rH3rlQ6982LTyoVc+7Fr50CsfeuXDoZUPvU4qGJvsAQAAAACAAADAEgAA9AIAAA==eJxd17GxGyEUQFGVQAmUQAfGHVACJVDCCwkJN6QUSqEUjzyW/hkr0V0pYM68HZZ9vf7/xC8uKkkHvelDX/r1+ycTnelCV7rRnR500JNe9POv9b37c/33u/50pYPe9KEv/WKtRGe60JVudKcHHfSkF/3xOsN3f/2V/yrzrcy3Mt/KfCvzrT/edyc604WudKM7PeigJ73oj9f79N0f79/f609XOuhNH/rSL9ZKdKYLXelGd3rQQU960d/7GW/gDbyBN/AG3sAbeANv4A28gTfwBt7AG3gDb+ANvIHX/Wbj3Xg33o134914N96Nd+PdeDfejXfj3Xg33o134914N1731IP34D14D96D9+A9eA/eg/fgPXgP3oP34D14D96D9+A9eL/7yr/+eC/ei/fivXgv3ov34r14L96L9+K9eC/ei/fivXgv3ovXZ+O7v/vz7x/vuysd9KYPfekXayU604WudKM7PeigJ73oj9fnf8Kb8Ca8CW/Cm/AmvAlvwpvwJrwJb8Kb8Ca8CW/Cm/AmvJ5xMt6MN+PNeDPejDfjzXgz3ow34814M96MN+PNeDPejDfj9RxX8Ba8BW/BW/AWvAVvwVvwFrwFb8Fb8Ba8BW/BW/AWvAWvZ9WKt+KteCveirfirXgr3oq34q14K96Kt+KteCveirfirXg9jze8DW/D2/A2vA1vw9vwNrwNb8Pb8Da8DW/D2/A2vA1vw+s7R8fb8Xa8HW/H2/F2vB1vx9vxdrwdb8fb8Xa8HW/H2/F2vAPvwDvwDrwD78A78A68A+/AO/AOvAPvwDvwDrwD78A78A68gTfwBt7AG3gDb+ANvIE38AbewBt4A2/gDbyBN/AG3sDr+/HEO/FOvBPvxDvxTrwT78Q78U68E+/EO/FOvBPvxDvxTrwL78K78C68C+/Cu/AuvAvvwrvwLrwL78K78C68C+/Cu/AuvA/eB++D98H74H3wPngfvA/eB++D98H74H3wPngfvA/eB++D9/l6/wAz6elI
+  </AppendedData>
+</VTKFile>
