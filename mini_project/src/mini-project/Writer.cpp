@@ -9,6 +9,8 @@
 #include <vtkPointData.h>
 #include <vtkXMLStructuredGridWriter.h>
 #include <vtkStructuredGrid.h>
+#include <vtkXMLUnstructuredGridWriter.h>
+#include <vtkUnstructuredGrid.h>
 #include <vtkSmartPointer.h>
 #include <vtkPolyLine.h>
 #include <vtkCellArray.h>
@@ -138,25 +140,21 @@ void Writer<DIM>::snapshot(int counter, const Mesh<DIM> &mesh, const Ray<DIM> &r
         }
     }
 
-    vtkNew<vtkPolyData> polyData;
-    polyData->SetPoints(tract_points.Get());
-
     vtkNew<vtkPolyLine> polyLine;
 
-    polyLine->GetPointIds()->SetNumberOfIds(trajectory.size());
     for (unsigned int i = 0; i < trajectory.size(); i++)
     {
-        polyLine->GetPointIds()->SetId(i, i);
+        polyLine->GetPointIds()->InsertNextId(i);
     }
 
-//    vtkNew<vtkCellArray> cells;
-//    cells->InsertNextCell(polyLine->GetEdge(0));
-//    polyData->SetLines(cells.Get());
+    vtkSmartPointer<vtkUnstructuredGrid> unstructuredGrid = vtkSmartPointer<vtkUnstructuredGrid>::New();
+    unstructuredGrid->SetPoints(tract_points);
+    unstructuredGrid->InsertNextCell(polyLine->GetCellType(), polyLine->GetPointIds());
 
-    std::string fileName2 = path_ + std::to_string(counter) + "_trace.vts";
-    vtkSmartPointer<vtkXMLPPolyDataWriter> writer2 = vtkSmartPointer<vtkXMLPPolyDataWriter>::New();
+    std::string fileName2 = path_ + std::to_string(counter) + "_trace.vtu";
+    vtkSmartPointer<vtkXMLUnstructuredGridWriter> writer2 = vtkSmartPointer<vtkXMLUnstructuredGridWriter>::New();
     writer2->SetFileName(fileName2.c_str());
-    writer2->SetInputData(polyData.Get());
+    writer2->SetInputData(unstructuredGrid);
     writer2->Write();
 }
 
