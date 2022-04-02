@@ -4,45 +4,67 @@
 
 #include "gtest/gtest.h"
 #include <vector>
-#include <cmath>
-
 #include "mini-project/Mesh.hpp"
-#include "mini-project/GradientDescent.hpp"
-#include "mini-project/Ray.hpp"
 #include "mini-project/Writer.hpp"
+#include "mini-project/search_methods/Bisection.hpp"
+#include "mini-project/func_refraction/LinearFunction.hpp"
 
-TEST(SIMPLE_2D, INIT) {
+TEST(SIMPLE_2D, SIZE_20) {
 
-    // Размер расчётной сетки, точек на сторону
-    int size = 20;
-    // Шаг точек по пространству
-    double h = 1;
-    // Шаг по времени
-    double tau = 0.01;
+    const int DIM = 2; // размерность пространства
+    int size = 20; // размер квадратной сетки
+    double h = 1.; // шаг
 
-    // распределение коэффициента преломления
-    std::vector<double> n_coeff(static_cast<int>(size / h));
-    double n_min = 1.;
-    double n_max = 1.5;
-    for (int i = 0; i < n_coeff.size(); ++i) {
-        n_coeff[i] = n_min + static_cast<double>(i) / static_cast<double>(n_coeff.size()) * (n_max - n_min);
-    }
+    auto n_coeff = std::make_shared<LinearFunction<DIM>>(LinearFunction<DIM>(size * h, size * h, size * h, 1, 2));
 
-    const int DIM = 2;
+    auto mesh = std::make_shared<Mesh<DIM>>(
+            Mesh<DIM>(size, h, n_coeff)); // сетка с заданным шагом и распределением коэффициента преломления на ней
 
-    // Создаём сетку заданного размера
-    Mesh<DIM> mesh(size, h, n_coeff);
+    auto writer = std::make_shared<Writer<DIM>>(Writer<DIM>(std::string(
+            "/home/leeiozh/miptbot/proga/infa4sem/mini_project/out/res_quadr_"))); // писатель и путь, куда ему писать
 
-    Writer<DIM> writer(std::string("/home/leeiozh/miptbot/proga/infa4sem/mini_project/out/2803_"));
+    Bisection<DIM> bisection(n_coeff, mesh, writer); // метод, который будет все считать и заодно отрисовывать
 
-    double angle = 45. / 180. * M_PI;
+    double res = bisection.search(0, 90, h * (size - 1), h); // запуск метода
+    ASSERT_NEAR(res, 48.0981, TOLERANCE);
+}
 
-    Ray<DIM> ray(angle, 0, 0, h);
+TEST(SIMPLE_2D, SIZE_200) {
 
-    while (ray.get_x() < size * h) {
-        ray.step(h, n_min + ray.get_x() / size / h * (n_max - n_min), n_min + (ray.get_x() + h) / size / h * (n_max - n_min));
-        std::cout << ray.get_x() << " " << ray.get_y() << std::endl;
-    }
+    const int DIM = 2; // размерность пространства
+    int size = 200; // размер квадратной сетки
+    double h = 1.; // шаг
 
-    writer.snapshot(55, mesh, ray);
+    auto n_coeff = std::make_shared<LinearFunction<DIM>>(LinearFunction<DIM>(size * h, size * h, size * h, 1, 1.5));
+
+    auto mesh = std::make_shared<Mesh<DIM>>(
+            Mesh<DIM>(size, h, n_coeff)); // сетка с заданным шагом и распределением коэффициента преломления на ней
+
+    auto writer = std::make_shared<Writer<DIM>>(Writer<DIM>(std::string(
+            "/home/leeiozh/miptbot/proga/infa4sem/mini_project/out/res_200_quadr_"))); // писатель и путь, куда ему писать
+
+    Bisection<DIM> bisection(n_coeff, mesh, writer); // метод, который будет все считать и заодно отрисовывать
+
+    double res = bisection.search(0, 90, h * (size - 1), h); // запуск метода
+    ASSERT_NEAR(res, 57.81005859375, TOLERANCE);
+}
+
+TEST(SIMPLE_2D, SIZE_2000) {
+
+    const int DIM = 2; // размерность пространства
+    int size = 2000; // размер квадратной сетки
+    double h = 1.; // шаг
+
+    auto n_coeff = std::make_shared<LinearFunction<DIM>>(LinearFunction<DIM>(size * h, size * h, size * h, 1, 3));
+
+    auto mesh = std::make_shared<Mesh<DIM>>(
+            Mesh<DIM>(size, h, n_coeff)); // сетка с заданным шагом и распределением коэффициента преломления на ней
+
+    auto writer = std::make_shared<Writer<DIM>>(Writer<DIM>(std::string(
+            "/home/leeiozh/miptbot/proga/infa4sem/mini_project/out/res_2000_quadr_"))); // писатель и путь, куда ему писать
+
+    Bisection<DIM> bisection(n_coeff, mesh, writer); // метод, который будет все считать и заодно отрисовывать
+
+    double res = bisection.search(0, 90, h * (size - 1), h); // запуск метода
+    ASSERT_NEAR(res, 66.64306640625, TOLERANCE);
 }

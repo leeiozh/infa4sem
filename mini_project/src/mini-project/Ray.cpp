@@ -3,7 +3,6 @@
 //
 
 #include "Ray.hpp"
-#include "iostream"
 
 template <>
 Ray<2>::Ray(double angle, double start_x, double start_y, double step) {
@@ -25,10 +24,7 @@ template <>
 void Ray<2>::step(double step, double n_prev, double n_next) {
     trajectory_.push_back(
             std::array<double, 2>({trajectory_.back()[0] + step, trajectory_.back()[1] + (trajectory_.back()[1] -
-                                  trajectory_[trajectory_.size() - 2][1]) * n_prev / n_next}));
-
-//    std::cout <<  trajectory_.back()[1] << std::endl;
-
+                                   trajectory_[trajectory_.size() - 2][1]) * n_prev / n_next}));
 }
 
 template <>
@@ -37,9 +33,7 @@ void Ray<3>::step(double step, double n_prev, double n_next) {
             {trajectory_.back()[0] + step,
              trajectory_.back()[1] + (trajectory_.back()[1] - trajectory_[trajectory_.size() - 2][1]) *
                                      n_prev / n_next, trajectory_.back()[2] + (trajectory_.back()[2] -
-                                                                               trajectory_[trajectory_.size() -
-                                                                                           2][2]) * n_prev /
-                                                                              n_next}));
+                                     trajectory_[trajectory_.size() - 2][2]) * n_prev /  n_next}));
 }
 
 template

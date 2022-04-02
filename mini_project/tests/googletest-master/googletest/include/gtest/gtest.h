@@ -1727,7 +1727,7 @@ GTEST_API_ AssertionResult IsNotSubstring(
 
 namespace internal {
 
-// Helper template function for comparing floating-points.
+// Helper template function for comparing floating-points_.
 //
 // Template parameter:
 //
